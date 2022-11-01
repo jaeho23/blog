@@ -42,7 +42,8 @@ function App() {
       <div className='container'>
         <button type='button' onClick={()=>{
           let x = ["여자코트 추천", "마포 우동맛집", "자바스크립트독학"];
-          changePost(x)
+          x.sort();
+          changePost(x);
         }}>O</button>
       </div>
     </>
