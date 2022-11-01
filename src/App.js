@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from "react";
 
 function App() {
-  const [title, changePost] = useState(["남자코트 추천", "강남 우동맛집", "파이썬독학"]);
+  let [title, changePost] = useState(["남자코트 추천", "강남 우동맛집", "파이썬독학"]);
 
   return (
     <>
@@ -40,11 +40,16 @@ function App() {
       </div>
       <br />
       <div className='container'>
-        <button type='button' onClick={()=>{
-          let x = ["여자코트 추천", "마포 우동맛집", "자바스크립트독학"];
-          x.sort();
-          changePost(x);
-        }}>O</button>
+        <div className='box'>
+          <button type='button' onClick={() => {
+            changePost(["여자코트 추천", "마포 우동맛집", "자바스크립트독학"]);
+          }}>제목 변경</button>
+          <button type='button' onClick={() => {
+            let x = [...title];
+            x.sort();
+            changePost(x);
+          }}>가나다순 정렬</button>
+        </div>
       </div>
     </>
   );

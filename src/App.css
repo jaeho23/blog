@@ -39,3 +39,7 @@
 .container{
   border-bottom: 3px solid gray;
 }
+.box{
+  display: flex;
+  justify-content: space-between;
+}
