@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -6,8 +5,77 @@ import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from "react";
 
+function Modal(props) {
+  return (
+    <>
+      <div className='container'>
+          <div>
+            <p style={{fontSize:"20px", fontWeight:'bold'}}>{props.x}</p>
+            <p>2월 17일 발행</p>
+          </div>
+          <button type='button' onClick={() => 
+            {let arr = props.arr;
+            arr[props.index] = false; return (
+            (props.modal[props.index] ? props.setModal(arr) : null))
+            }}>삭제</button>
+      </div>
+      <br />
+    </>
+  );
+}
+
+const Iter = (props) => {
+  let arr = props.title;
+  var k = "";
+  var [modal, setModal] = useState([true, true, true]);
+  return (
+    <>
+      {arr.map((x, index) => {
+        return(
+        <>
+          {
+          modal[index] 
+          ? <Modal x={x} modal={modal} index={index} arr={arr} setModal={setModal}></Modal>
+          : null
+          }
+        </>)}
+      )}
+      <div className='container'>
+        <div className='box'>
+          <button type='button' onClick={() => {
+            props.changePost(["여자코트 추천", "마포 우동맛집", "자바스크립트독학"]);
+          }}>제목 변경</button>
+          <button type='button' onClick={() => {
+            let x = [...props.title];
+            x.sort();
+            props.changePost(x);
+          }}>가나다순 정렬</button>
+        </div>
+        <br />
+      </div>
+      <br />
+      <div className='container'>
+        <div className='box'>
+          <input onChange = {(e) => {
+            console.log(e.target.value)
+            k = e.target.value;
+          }}/>
+          <button type='button' onClick={() => {
+            arr.push(k);
+            modal.push(true);
+            props.changePost(arr);
+          }}>추가하기</button>
+        </div>
+      <br />
+      </div>
+    </>
+  )
+}
+
 function App() {
+
   let [title, changePost] = useState(["남자코트 추천", "강남 우동맛집", "파이썬독학"]);
+  const [modal, setModal] = useState(false);
 
   return (
     <>
@@ -23,33 +91,8 @@ function App() {
         </Container>
       </Navbar>
       <br />
-
-      <div className='container'>
-        <p style={{fontSize:"20px", fontWeight:'bold'}}>{title[0]}</p>
-        <p>2월 17일 발행</p>
-      </div>
-      <br />
-      <div className='container'>
-        <p style={{fontSize:"20px", fontWeight:'bold'}}>{title[1]}</p>
-        <p>2월 17일 발행</p>
-      </div>
-      <br />
-      <div className='container'>
-        <p style={{fontSize:"20px", fontWeight:'bold'}}>{title[2]}</p>
-        <p>2월 17일 발행</p>
-      </div>
-      <br />
-      <div className='container'>
-        <div className='box'>
-          <button type='button' onClick={() => {
-            changePost(["여자코트 추천", "마포 우동맛집", "자바스크립트독학"]);
-          }}>제목 변경</button>
-          <button type='button' onClick={() => {
-            let x = [...title];
-            x.sort();
-            changePost(x);
-          }}>가나다순 정렬</button>
-        </div>
+      <div>
+        <Iter title={title} modal={modal} changePost={changePost} setModal={setModal}></Iter>
       </div>
     </>
   );
