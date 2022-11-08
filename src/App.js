@@ -6,18 +6,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from "react";
 
 function Modal(props) {
+
   return (
     <>
+    
       <div className='container'>
           <div>
             <p style={{fontSize:"20px", fontWeight:'bold'}}>{props.x}</p>
             <p>2월 17일 발행</p>
           </div>
-          <button type='button' onClick={() => 
-            {let arr = props.arr;
-            arr[props.index] = false; return (
-            (props.modal[props.index] ? props.setModal(arr) : null))
-            }}>삭제</button>
+          <button type='button' onClick={() => {
+            var arr = props.modal;
+            arr[props.index] = false;
+            <>
+            {props.modal[props.index] ? props.setModal(arr) : null}
+            {console.log(arr)}</>
+          }}>삭제</button>
       </div>
       <br />
     </>
@@ -35,10 +39,11 @@ const Iter = (props) => {
         <>
           {
           modal[index] 
-          ? <Modal x={x} modal={modal} index={index} arr={arr} setModal={setModal}></Modal>
+          ? <Modal x={x} modal={modal} index={index} setModal={setModal}></Modal>
           : null
           }
         </>)}
+        
       )}
       <div className='container'>
         <div className='box'>
@@ -57,25 +62,24 @@ const Iter = (props) => {
       <div className='container'>
         <div className='box'>
           <input onChange = {(e) => {
-            console.log(e.target.value)
             k = e.target.value;
           }}/>
           <button type='button' onClick={() => {
             arr.push(k);
             modal.push(true);
             props.changePost(arr);
+            setModal(modal);
           }}>추가하기</button>
         </div>
       <br />
       </div>
-    </>
+    </>    
   )
 }
 
 function App() {
 
   let [title, changePost] = useState(["남자코트 추천", "강남 우동맛집", "파이썬독학"]);
-  const [modal, setModal] = useState(false);
 
   return (
     <>
@@ -92,7 +96,7 @@ function App() {
       </Navbar>
       <br />
       <div>
-        <Iter title={title} modal={modal} changePost={changePost} setModal={setModal}></Iter>
+        <Iter title={title} changePost={changePost}></Iter>
       </div>
     </>
   );
